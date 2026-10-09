@@ -1,6 +1,26 @@
 @Restaurants.API_HostAddress = https://localhost:7066
 
-@id=1
+@id=2
 GET {{Restaurants.API_HostAddress}}/api/restaurants/{{id}}
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants
+
+###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+    "name": "asdf",
+    "description": "aaaa",
+    "hasDelivery": false,
+    "category": "Italian"
+}
+
+###
+
+GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###

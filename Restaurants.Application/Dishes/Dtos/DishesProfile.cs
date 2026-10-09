@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Restaurants.Domain.Entity;
 
-namespace Restaurants.Application.Dishes.Dtos
+namespace Restaurants.Application.Dishes.Dtos;
+
+public class DishesProfile : Profile
 {
-    public class DishesProfile : Profile
+    public DishesProfile()
     {
-        public DishesProfile()
-        {
-            CreateMap<Dish, DishDto>();
-        }
+        CreateMap<Dish, DishDto>();
     }
 }
