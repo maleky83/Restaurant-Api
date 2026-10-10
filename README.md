@@ -1,4 +1,5 @@
-# Restaurant-Management
+# Restaurant-System
+
 
 A Restaurant system developed with ASP.NET Core 
 Restaurant , Dish
