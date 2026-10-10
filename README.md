@@ -1,6 +1,7 @@
 # Restaurant-Management
 
 A Restaurant system developed with ASP.NET Core 
+Restaurant , Dish
 
 Features:
 * Web Api
@@ -10,9 +11,9 @@ Features:
 * CQRS , Mediatr
 * Serilog
 * User JWT and ASP.NET Core Identity
-* Restaurant , Dish
 * Dependency Injection
 * Auto Mapper
 * FluentValidation
+* Exception Middleware
 * Swagger And Postman API documentation
 * Seed Data
