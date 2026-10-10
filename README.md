@@ -1,4 +1,4 @@
-# Shop Management System
+# Restaurant-Management
 
 A Restaurant system developed with ASP.NET Core 
 
