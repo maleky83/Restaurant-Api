@@ -1,0 +1,21 @@
+﻿using Restaurants.Domain.Entities;
+using Restaurants.Domain.Repositories;
+using Restaurants.Infrastrucure.Persistence;
+
+namespace Restaurants.Infrastrucure.Repositories;
+
+internal class DishesRepository(RestaurantsDbContext dbContext) : IDishesRepository
+{
+    public async Task<int> CreateAsync(Dish entity)
+    {
+        dbContext.Dishes.Add(entity);
+        await dbContext.SaveChangesAsync();
+        return entity.Id;
+    }
+
+    public async Task DeleteAllAsync(IEnumerable<Dish> entity)
+    {
+        dbContext.Dishes.RemoveRange(entity);
+        await dbContext.SaveChangesAsync();
+    }
+}

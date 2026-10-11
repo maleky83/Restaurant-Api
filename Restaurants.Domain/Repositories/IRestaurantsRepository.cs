@@ -1,4 +1,4 @@
-﻿using Restaurants.Domain.Entity;
+﻿using Restaurants.Domain.Entities;
 
 namespace Restaurants.Domain.Repositories;
 
