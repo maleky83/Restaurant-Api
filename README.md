@@ -1,6 +1,6 @@
 # Restaurant-Api
 
-ASP.NET Core 
+ASP.NET Core 10 . Entity: 
 User , Restaurant , Dish
 
 Features:
