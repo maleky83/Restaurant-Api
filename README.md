@@ -1,4 +1,4 @@
-# Restaurant-System
+# Restaurant-Api
 
 
 A Restaurant system developed with ASP.NET Core 
