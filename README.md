@@ -1,8 +1,7 @@
 # Restaurant-Api
 
-
-A Restaurant system developed with ASP.NET Core 
-Restaurant , Dish
+ASP.NET Core 
+User , Restaurant , Dish
 
 Features:
 * Web Api
