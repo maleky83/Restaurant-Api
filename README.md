@@ -1,20 +1,20 @@
-# Restaurant-System
+# Restaurant-Api
 
-
-A Restaurant system developed with ASP.NET Core 
-Restaurant , Dish
+ASP.NET Core 10 . Entity: 
+User , Restaurant , Dish
 
 Features:
 * Web Api
 * Clean Architecure 
 * RESTful
 * Entity Framework Core with Fluent API
-* CQRS , Mediatr
+* CQRS , Mediator
 * Serilog
-* User JWT and ASP.NET Core Identity
+* Identity User , Role
+* Authentication
+* Authorization
 * Dependency Injection
 * Auto Mapper
 * FluentValidation
-* Exception Middleware
 * Swagger And Postman API documentation
 * Seed Data
