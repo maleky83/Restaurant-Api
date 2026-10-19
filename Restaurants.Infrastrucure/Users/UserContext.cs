@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Restaurants.Application.User;
+using Restaurants.Application.Users;
 using System.Security.Claims;
 
 namespace Restaurants.Infrastrucure.Users;
@@ -15,6 +15,8 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
             throw new InvalidOperationException("User context is not present");
         }
 
+        var claims = user.Claims.Select(c => new { c.Type, c.Value }).ToList();
+
         if (user.Identity == null || !user.Identity.IsAuthenticated)
         {
             return null;
@@ -22,7 +24,8 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
 
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)!.Value;
         var email = user.FindFirst(ClaimTypes.Email)!.Value;
-        var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role)!.Select(c => c.Value);
+        //var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role)!.Select(c => c.Value);
+        var roles = user.FindAll(ClaimTypes.Role).Select(c => c.Value);
 
         return new CurrentUser(userId, email, roles);
     }

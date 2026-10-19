@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Commands.DeleteRestraurant;
@@ -6,13 +7,16 @@ using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
+using Restaurants.Domain.Constants;
 
 namespace Restaurants.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/restaurants")]
+[Authorize]
 public class RestaurantsController(IMediator mediator) : ControllerBase
 {
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
     {
@@ -30,6 +34,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<ActionResult> CreateRestraurant(
      CreateRestraurantCommand command)
     {
@@ -39,7 +44,6 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteRestraurant([FromRoute] int id)
     {
@@ -50,7 +54,6 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
 
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateRestaurant(
         [FromRoute] int id,
         [FromBody] UpdateRestaurantCommand command)

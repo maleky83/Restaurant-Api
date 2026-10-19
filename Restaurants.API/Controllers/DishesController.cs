@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Application.Dishes.Commands.DeleteDishesForRestaurant;
 using Restaurants.Application.Dishes.Dtos;
-using Restaurants.Application.Dishes.Queries.GetAllDishes;
 using Restaurants.Application.Dishes.Queries.GetDishByIdForRestaurant;
+using Restaurants.Application.Dishes.Queries.GetDishesForRestaurant;
 
 namespace Restaurants.API.Controllers;
 
