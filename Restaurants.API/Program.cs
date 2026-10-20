@@ -23,7 +23,7 @@ await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 
-app.UseMiddleware<ErrorHandlingMiddle>();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeLoggingMiddleware>();
 
 app.UseSerilogRequestLogging();

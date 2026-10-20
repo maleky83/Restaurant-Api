@@ -4,7 +4,7 @@ using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.API.Middlewares;
 
-public class ErrorHandlingMiddle(ILogger<ErrorHandlingMiddle> logger) : IMiddleware
+public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : IMiddleware
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
@@ -14,14 +14,14 @@ public class ErrorHandlingMiddle(ILogger<ErrorHandlingMiddle> logger) : IMiddlew
         }
         catch (NotFoundException notFound)
         {
-            context.Response.StatusCode = 404;
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
             await context.Response.WriteAsync(notFound.Message);
 
             logger.LogWarning(notFound.Message);
         }
         catch (ValidationException validation)
         {
-            context.Response.StatusCode = 400;
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsync(validation.Message);
 
             logger.LogWarning(validation.Message);
@@ -30,8 +30,7 @@ public class ErrorHandlingMiddle(ILogger<ErrorHandlingMiddle> logger) : IMiddlew
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
-
-            context.Response.StatusCode = 500;
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             await context.Response.WriteAsync("Something went wrong");
         }
     }

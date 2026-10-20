@@ -3,35 +3,34 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Restaurants.Infrastrucure.Migrations
+namespace Restaurants.Infrastrucure.Migrations;
+
+/// <inheritdoc />
+public partial class UpdateEntity : Migration
 {
     /// <inheritdoc />
-    public partial class UpdateEntity : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<DateOnly>(
-                name: "DateOfBirth",
-                table: "AspNetUsers",
-                type: "date",
-                nullable: true,
-                oldClrType: typeof(DateOnly),
-                oldType: "date");
-        }
+        migrationBuilder.AlterColumn<DateOnly>(
+            name: "DateOfBirth",
+            table: "AspNetUsers",
+            type: "date",
+            nullable: true,
+            oldClrType: typeof(DateOnly),
+            oldType: "date");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AlterColumn<DateOnly>(
-                name: "DateOfBirth",
-                table: "AspNetUsers",
-                type: "date",
-                nullable: false,
-                defaultValue: new DateOnly(1, 1, 1),
-                oldClrType: typeof(DateOnly),
-                oldType: "date",
-                oldNullable: true);
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AlterColumn<DateOnly>(
+            name: "DateOfBirth",
+            table: "AspNetUsers",
+            type: "date",
+            nullable: false,
+            defaultValue: new DateOnly(1, 1, 1),
+            oldClrType: typeof(DateOnly),
+            oldType: "date",
+            oldNullable: true);
     }
 }

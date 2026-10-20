@@ -1,4 +1,4 @@
-﻿[*.cs]
+﻿ [*.cs]
 
 # CS9113: Parameter is unread.
 dotnet_diagnostic.CS9113.severity = error
@@ -6,3 +6,6 @@ dotnet_diagnostic.CS9113.severity = error
 
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = error
+
+# IDE0130: Namespace does not match folder structure
+dotnet_diagnostic.IDE0130.severity = error

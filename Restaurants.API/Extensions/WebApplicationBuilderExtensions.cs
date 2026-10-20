@@ -30,7 +30,7 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddEndpointsApiExplorer();
 
         builder.Services.AddScoped<RequestTimeLoggingMiddleware>();
-        builder.Services.AddScoped<ErrorHandlingMiddle>();
+        builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
         builder.Host.UseSerilog((context, configuration) =>
         {

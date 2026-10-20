@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Restaurants.Application.Users;
+using Restaurants.Infrastrucure.Authorization;
 using System.Security.Claims;
 
 namespace Restaurants.Infrastrucure.Users;
@@ -24,9 +25,13 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
 
         var userId = user.FindFirst(ClaimTypes.NameIdentifier)!.Value;
         var email = user.FindFirst(ClaimTypes.Email)!.Value;
-        //var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role)!.Select(c => c.Value);
         var roles = user.FindAll(ClaimTypes.Role).Select(c => c.Value);
+        var nationality = user.FindFirst(AppClaimTypes.Nationality)?.Value;
+        var dateOfBirthString = user.FindFirst(AppClaimTypes.DateOfBirth)?.Value;
+        var dateOfBirth = dateOfBirthString == null
+            ? (DateOnly?)null
+            : DateOnly.ParseExact(dateOfBirthString, "yyyy-MM-dd");
 
-        return new CurrentUser(userId, email, roles);
+        return new CurrentUser(userId, email, roles, nationality, dateOfBirth);
     }
 }
