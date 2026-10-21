@@ -102,53 +102,303 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
     private IEnumerable<Restaurant> GetRestaurants()
     {
         List<Restaurant> restaurants =
-    [
-        new()
+        [
+            new()
         {
             Name = "KFC",
             Category = "Fast Food",
-            Description = "KFC is an American fast food restaurant chain.",
+            Description = "KFC is an American fast food restaurant chain specializing in fried chicken.",
             ContactEmail = "contact@kfc.com",
             HasDelivery = true,
-
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
             Dishes =
             [
                 new()
                 {
                     Name = "Nashville Hot Chicken",
-                    Description = "Nashville Hot Chicken (10 pcs.)",
+                    Description = "Spicy fried chicken with a crispy coating (10 pcs.).",
                     Price = 10.30M
                 },
-
                 new()
                 {
                     Name = "Chicken Nuggets",
-                    Description = "Chicken Nuggets (5 pcs.)",
+                    Description = "Crispy chicken nuggets (5 pcs.).",
                     Price = 5.30M
+                },
+                new()
+                {
+                    Name = "Zinger Burger",
+                    Description = "Spicy crispy chicken fillet burger.",
+                    Price = 7.50M
                 }
             ],
-            Address = new ()
+            Address = new()
             {
                 City = "London",
                 Street = "Cork St 5",
-                PostalCode = "WC2N 5DI",
-            },
+                PostalCode = "WC2N 5DI"
+            }
         },
-        new Restaurant(){
 
-            Name = "McDonald",
-            Category = "Fast Food",
-            Description = "McDonalfd's Corporation (McDonald's)",
-            ContactEmail = "contact@mcdonald.com",
+        new()
+        {
+            Name = "Pizza Hut",
+            Category = "Italian",
+            Description = "Pizza Hut is an international restaurant chain known for pizza, pasta, and Italian-inspired dishes.",
+            ContactEmail = "contact@pizzahut.com",
             HasDelivery = true,
-            Address = new Address()
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Margherita Pizza",
+                    Description = "Classic pizza with tomato sauce, mozzarella, and fresh basil.",
+                    Price = 12.50M
+                },
+                new()
+                {
+                    Name = "Pepperoni Pizza",
+                    Description = "Pizza topped with mozzarella cheese and pepperoni.",
+                    Price = 15.90M
+                },
+                new()
+                {
+                    Name = "Chicken Alfredo Pasta",
+                    Description = "Creamy Alfredo pasta with grilled chicken.",
+                    Price = 13.40M
+                }
+            ],
+            Address = new()
             {
                 City = "London",
-                Street = "Boots 193",
-                PostalCode = "W1F 8SR",
-            },
+                Street = "Oxford Street 120",
+                PostalCode = "W1D 1LT"
+            }
         },
-    ];
+
+        new()
+        {
+            Name = "Sushi House",
+            Category = "Japanese",
+            Description = "A Japanese restaurant serving freshly prepared sushi, sashimi, and traditional Japanese dishes.",
+            ContactEmail = "info@sushihouse.com",
+            HasDelivery = true,
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Salmon Sushi",
+                    Description = "Fresh salmon nigiri served with seasoned rice.",
+                    Price = 9.80M
+                },
+                new()
+                {
+                    Name = "California Roll",
+                    Description = "Sushi roll with avocado, cucumber, and crab-style filling.",
+                    Price = 8.50M
+                },
+                new()
+                {
+                    Name = "Chicken Teriyaki",
+                    Description = "Grilled chicken glazed with teriyaki sauce and served with rice.",
+                    Price = 14.20M
+                }
+            ],
+            Address = new()
+            {
+                City = "London",
+                Street = "Baker Street 221",
+                PostalCode = "NW1 6XE"
+            }
+        },
+
+        new()
+        {
+            Name = "Taco Bell",
+            Category = "Mexican",
+            Description = "A fast food restaurant offering Mexican-inspired tacos, burritos, and quesadillas.",
+            ContactEmail = "support@tacobell.com",
+            HasDelivery = true,
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Crunchy Taco",
+                    Description = "Crispy taco shell filled with seasoned beef, lettuce, and cheese.",
+                    Price = 3.50M
+                },
+                new()
+                {
+                    Name = "Chicken Burrito",
+                    Description = "Flour tortilla filled with chicken, rice, beans, and salsa.",
+                    Price = 8.90M
+                },
+                new()
+                {
+                    Name = "Cheese Quesadilla",
+                    Description = "Grilled tortilla filled with melted cheese.",
+                    Price = 6.70M
+                }
+            ],
+            Address = new()
+            {
+                City = "London",
+                Street = "Kingsway 45",
+                PostalCode = "WC2B 6SR"
+            }
+        },
+
+        new()
+        {
+            Name = "Burger King",
+            Category = "American",
+            Description = "An American fast food chain famous for flame-grilled burgers, fries, and sandwiches.",
+            ContactEmail = "contact@burgerking.com",
+            HasDelivery = true,
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Whopper",
+                    Description = "Flame-grilled beef burger with lettuce, tomato, onion, and mayonnaise.",
+                    Price = 9.50M
+                },
+                new()
+                {
+                    Name = "Double Cheeseburger",
+                    Description = "Two beef patties with melted cheese in a toasted bun.",
+                    Price = 8.70M
+                },
+                new()
+                {
+                    Name = "Chicken Royale",
+                    Description = "Crispy chicken fillet burger with lettuce and mayonnaise.",
+                    Price = 7.90M
+                }
+            ],
+            Address = new()
+            {
+                City = "London",
+                Street = "Strand 88",
+                PostalCode = "WC2R 0DW"
+            }
+        },
+
+        new()
+        {
+            Name = "Curry Palace",
+            Category = "Indian",
+            Description = "An Indian restaurant serving traditional curries, aromatic rice dishes, and freshly baked naan bread.",
+            ContactEmail = "info@currypalace.com",
+            HasDelivery = true,
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Chicken Tikka Masala",
+                    Description = "Grilled chicken in a creamy tomato-based curry sauce.",
+                    Price = 14.50M
+                },
+                new()
+                {
+                    Name = "Butter Chicken",
+                    Description = "Tender chicken cooked in a rich buttery tomato sauce.",
+                    Price = 13.90M
+                },
+                new()
+                {
+                    Name = "Vegetable Biryani",
+                    Description = "Fragrant basmati rice cooked with vegetables and Indian spices.",
+                    Price = 11.80M
+                }
+            ],
+            Address = new()
+            {
+                City = "London",
+                Street = "Brick Lane 25",
+                PostalCode = "E1 6PU"
+            }
+        },
+
+        new()
+        {
+            Name = "Green Garden",
+            Category = "Vegetarian",
+            Description = "A vegetarian restaurant focused on fresh ingredients, healthy meals, and plant-based cuisine.",
+            ContactEmail = "hello@greengarden.com",
+            HasDelivery = false,
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Vegetable Burger",
+                    Description = "Plant-based burger with lettuce, tomato, and house sauce.",
+                    Price = 9.20M
+                },
+                new()
+                {
+                    Name = "Grilled Vegetable Bowl",
+                    Description = "A bowl of seasonal grilled vegetables served with quinoa.",
+                    Price = 10.50M
+                },
+                new()
+                {
+                    Name = "Mushroom Risotto",
+                    Description = "Creamy risotto prepared with mushrooms and Parmesan cheese.",
+                    Price = 12.60M
+                }
+            ],
+            Address = new()
+            {
+                City = "London",
+                Street = "Marylebone High Street 32",
+                PostalCode = "W1U 4QH"
+            }
+        },
+
+        new()
+        {
+            Name = "Dragon Wok",
+            Category = "Chinese",
+            Description = "A Chinese restaurant offering stir-fried noodles, rice dishes, and traditional Asian specialties.",
+            ContactEmail = "contact@dragonwok.com",
+            HasDelivery = true,
+            OwnerId = "0af2138d-b32e-4f83-b6cd-3c162a3f6a0e",
+            Dishes =
+            [
+                new()
+                {
+                    Name = "Chicken Chow Mein",
+                    Description = "Stir-fried noodles with chicken and fresh vegetables.",
+                    Price = 10.90M
+                },
+                new()
+                {
+                    Name = "Sweet and Sour Chicken",
+                    Description = "Crispy chicken served with sweet and sour sauce.",
+                    Price = 12.40M
+                },
+                new()
+                {
+                    Name = "Vegetable Fried Rice",
+                    Description = "Fried rice with eggs, vegetables, and soy sauce.",
+                    Price = 8.60M
+                }
+            ],
+            Address = new()
+            {
+                City = "London",
+                Street = "Chinatown, Gerrard Street 18",
+                PostalCode = "W1D 6JD"
+            }
+        }
+        ];
 
         return restaurants;
     }
