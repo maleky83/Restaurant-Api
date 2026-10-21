@@ -1,5 +1,5 @@
-﻿using Restaurants.Domain.Entities;
-using Restaurants.Domain.Repositories;
+﻿using Restaurants.Application.Repositories;
+using Restaurants.Domain.Entities;
 using Restaurants.Infrastrucure.Persistence;
 
 namespace Restaurants.Infrastrucure.Repositories;

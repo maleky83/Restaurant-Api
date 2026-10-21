@@ -2,11 +2,11 @@
 
 namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
-public class CreateRestraurantCommand : IRequest<int>
+public class CreateRestaurantCommand : IRequest<int>
 {
-    public string Name { get; set; } = default!;
-    public string Description { get; set; } = default!;
-    public string Category { get; set; } = default!;
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
     public bool HasDelivery { get; set; }
     public string? ContactEmail { get; set; }
     public string? ContactNumber { get; set; }

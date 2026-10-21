@@ -11,7 +11,7 @@ public class RestaurantsProfile : Profile
     {
         CreateMap<UpdateRestaurantCommand, Restaurant>();
 
-        CreateMap<CreateRestraurantCommand, Restaurant>()
+        CreateMap<CreateRestaurantCommand, Restaurant>()
             .ForMember(d => d.Address, opt => opt.MapFrom(
                 src => new Address
                 {

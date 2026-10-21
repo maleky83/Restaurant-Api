@@ -2,7 +2,7 @@
 
 namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
-public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestraurantCommand>
+public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
 {
     private readonly List<string> validCategories = ["Italian", "Mexican", "Japanese", "American", "Indian"];
 
@@ -12,7 +12,8 @@ public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestraur
             .Length(3, 100);
 
         RuleFor(dto => dto.Category)
-            .Must(validCategories.Contains);
+            .Must(category => validCategories.Contains(category, StringComparer.OrdinalIgnoreCase))
+            .WithMessage("must contain Italian or Mexican or Japanese or American or Indian");
 
         RuleFor(dto => dto.ContactEmail)
             .EmailAddress();

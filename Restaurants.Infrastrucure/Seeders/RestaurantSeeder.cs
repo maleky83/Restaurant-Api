@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Restaurants.Domain.Constants;
+using Restaurants.Application.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastrucure.Persistence;
 
@@ -29,6 +29,13 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
             await dbContext.Users.AddRangeAsync(users);
             await dbContext.SaveChangesAsync();
         }
+
+        if (!dbContext.UserRoles.Any())
+        {
+            var userRoles = GetUserRoles();
+            await dbContext.UserRoles.AddRangeAsync(userRoles);
+            await dbContext.SaveChangesAsync();
+        }
     }
 
     private IEnumerable<User> GetUsers()
@@ -42,6 +49,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 NormalizedEmail="owner@gmail.com".ToUpper(),
                 NormalizedUserName="owner@gmail.com".ToUpper(),
                 Nationality="iran",
+                DateOfBirth=new DateOnly(2000,1,10),
                 PasswordHash="AQAAAAIAAYagAAAAEPicYtOaWyOvVqKDzy46TUqdAZbRCKTdsDZl6qdCt4HYJRB+m3vLiiy9QNJlaggm+A==",
             },
             new()
@@ -52,6 +60,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 NormalizedEmail="user@gmail.com".ToUpper(),
                 NormalizedUserName="user@gmail.com".ToUpper(),
                 Nationality="iran",
+                DateOfBirth=new DateOnly(2005,1,10),
                 PasswordHash="AQAAAAIAAYagAAAAEPicYtOaWyOvVqKDzy46TUqdAZbRCKTdsDZl6qdCt4HYJRB+m3vLiiy9QNJlaggm+A==",
             },
             new()
@@ -62,6 +71,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 NormalizedEmail="admin@gmail.com".ToUpper(),
                 NormalizedUserName="admin@gmail.com".ToUpper(),
                 Nationality="iran",
+                DateOfBirth=new DateOnly(2010,1,10),
                 PasswordHash="AQAAAAIAAYagAAAAEPicYtOaWyOvVqKDzy46TUqdAZbRCKTdsDZl6qdCt4HYJRB+m3vLiiy9QNJlaggm+A=="
             }
             ];
@@ -143,5 +153,26 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
         return restaurants;
     }
 
+    private IEnumerable<IdentityUserRole<string>> GetUserRoles()
+    {
+        IEnumerable<IdentityUserRole<string>> userRoles = [
+            new()
+            {
+                UserId="f875a48f-21b6-4ff2-8d42-bddabb8244f5",
+                RoleId="8f5bbaf0-d4cb-4467-b674-6776d22cca93"
 
+            },
+            new()
+            {
+                RoleId="6a47498d-96de-4b15-a5d0-acf1833e765b",
+                UserId="413da784-ecab-4248-b786-d5c6214b9786"
+            },
+            new()
+            {
+                RoleId="987cb21b-9174-48be-bc7d-c2778bf24c82",
+                UserId="0af2138d-b32e-4f83-b6cd-3c162a3f6a0e"
+            }];
+
+        return userRoles;
+    }
 }

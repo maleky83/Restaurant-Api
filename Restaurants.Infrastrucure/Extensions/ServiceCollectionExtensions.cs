@@ -3,11 +3,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restaurants.Application.Interfaces;
+using Restaurants.Application.Repositories;
 using Restaurants.Application.Users;
 using Restaurants.Domain.Entities;
-using Restaurants.Domain.Repositories;
 using Restaurants.Infrastrucure.Authorization;
-using Restaurants.Infrastrucure.Authorization.Requirements;
+using Restaurants.Infrastrucure.Authorization.Requirements.CreatedMultipleRestaurants;
+using Restaurants.Infrastrucure.Authorization.Requirements.MinimumAge;
+using Restaurants.Infrastrucure.Authorization.Services;
+using Restaurants.Infrastrucure.Constants;
 using Restaurants.Infrastrucure.Persistence;
 using Restaurants.Infrastrucure.Repositories;
 using Restaurants.Infrastrucure.Seeders;
@@ -43,8 +47,13 @@ public static class ServiceCollectionExtensions
             .AddPolicy(PolicyNames.HasNationality,
                 builder => builder.RequireClaim(AppClaimTypes.Nationality, "iran"))
             .AddPolicy(PolicyNames.AtLeast20,
-                builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
+                builder => builder.AddRequirements(new MinimumAgeRequirement(20)))
+            .AddPolicy(PolicyNames.CreatedAtleast2Restaurants,
+                builder => builder.AddRequirements(new CreatedMultipleRestaurantsRequirement(2)));
 
         services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+        services.AddScoped<IAuthorizationHandler, CreatedMultipleRestaurantsRequirementHandler>();
+
+        services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
     }
 }

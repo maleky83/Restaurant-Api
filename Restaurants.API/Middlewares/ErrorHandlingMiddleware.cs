@@ -1,5 +1,4 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.API.Middlewares;
@@ -23,9 +22,11 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             await context.Response.WriteAsync(validation.Message);
-
-            logger.LogWarning(validation.Message);
-
+        }
+        catch (ForbidException)
+        {
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            await context.Response.WriteAsync("Access forbidden");
         }
         catch (Exception ex)
         {

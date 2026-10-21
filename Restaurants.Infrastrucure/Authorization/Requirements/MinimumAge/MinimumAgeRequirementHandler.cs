@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using Restaurants.Infrastrucure.Users;
+using Restaurants.Application.Users;
 
-namespace Restaurants.Infrastrucure.Authorization.Requirements;
+namespace Restaurants.Infrastrucure.Authorization.Requirements.MinimumAge;
 
 public class MinimumAgeRequirementHandler(
     ILogger<MinimumAgeRequirementHandler> logger,
-    UserContext userContext
+    IUserContext userContext
     ) : AuthorizationHandler<MinimumAgeRequirement>
 {
     protected override Task HandleRequirementAsync(
@@ -16,8 +16,8 @@ public class MinimumAgeRequirementHandler(
         var currentUser = userContext.GetCurrentUser();
 
         logger.LogInformation("User : {Email} , DateOfBirth : {DoB} - Handling MinimumAgeRequirement",
-            currentUser.Email,
-            currentUser.DateOfBirth
+            currentUser?.Email,
+            currentUser?.DateOfBirth
             );
 
         if (currentUser.DateOfBirth == null)

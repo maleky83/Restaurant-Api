@@ -1,6 +1,6 @@
 ﻿using Restaurants.Domain.Entities;
 
-namespace Restaurants.Domain.Repositories;
+namespace Restaurants.Application.Repositories;
 
 public interface IDishesRepository
 {

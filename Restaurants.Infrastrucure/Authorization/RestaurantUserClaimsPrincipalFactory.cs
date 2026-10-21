@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Restaurants.Domain.Entities;
+using Restaurants.Infrastrucure.Constants;
 using System.Security.Claims;
 
 namespace Restaurants.Infrastrucure.Authorization;

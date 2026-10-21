@@ -2,9 +2,11 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restaurants.Application.Constants;
+using Restaurants.Application.Interfaces;
+using Restaurants.Application.Repositories;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
-using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Dishes.Commands.CreateDish;
 
@@ -13,7 +15,8 @@ public class CreateDishCommandHandler(
     IMapper mapper,
     IDishesRepository dishRepository,
     IRestaurantsRepository restaurantsRepository,
-    IValidator<CreateDishCommand> validator
+    IValidator<CreateDishCommand> validator,
+    IRestaurantAuthorizationService restaurantAuthorizationService
     ) : IRequestHandler<CreateDishCommand, int>
 {
     public async Task<int> Handle(CreateDishCommand request, CancellationToken cancellationToken)
@@ -25,6 +28,11 @@ public class CreateDishCommandHandler(
         var restaurant = await restaurantsRepository
             .GetByIdAsync(request.RestaurantId)
             ?? throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
+
+        if (!restaurantAuthorizationService.Authorize(restaurant, ResourceOperation.Create))
+        {
+            throw new ForbidException();
+        }
 
         var dish = mapper.Map<Dish>(request);
 
