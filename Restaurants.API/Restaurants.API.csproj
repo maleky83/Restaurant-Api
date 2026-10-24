@@ -8,20 +8,16 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Restaurants.Application\Restaurants.Application.csproj" />
-		<ProjectReference Include="..\Restaurants.Infrastrucure\Restaurants.Infrastrucure.csproj" />
+		<ProjectReference Include="..\Restaurants.Infrastructure\Restaurants.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.12">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Logs\" />
+		<Folder Include="Logs\" />
 	</ItemGroup>
 
 </Project>

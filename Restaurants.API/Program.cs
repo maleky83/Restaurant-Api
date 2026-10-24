@@ -2,8 +2,8 @@ using Restaurants.API.Extensions;
 using Restaurants.API.Middlewares;
 using Restaurants.Application.Extensions;
 using Restaurants.Domain.Entities;
-using Restaurants.Infrastrucure.Extensions;
-using Restaurants.Infrastrucure.Seeders;
+using Restaurants.Infrastructure.Extensions;
+using Restaurants.Infrastructure.Seeders;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.AddPresentation();
-builder.Services.AddInfrastrucure(builder.Configuration);
+builder.Services.AddInftrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 var app = builder.Build();

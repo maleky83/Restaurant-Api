@@ -3,7 +3,9 @@
     <File Path=".editorconfig" />
   </Folder>
   <Project Path="Restaurants.API/Restaurants.API.csproj" />
+  <Project Path="Restaurants.Application.Tests/Restaurants.Application.Tests.csproj" Id="4c1b5540-e567-4a0d-9ba7-da0932914d6e" />
   <Project Path="Restaurants.Application/Restaurants.Application.csproj" Id="91b13373-8f0e-44f4-91a4-77ce13ea131b" />
   <Project Path="Restaurants.Domain/Restaurants.Domain.csproj" Id="913dccda-0e9a-4e82-b99b-1d817b98f93e" />
-  <Project Path="Restaurants.Infrastrucure/Restaurants.Infrastrucure.csproj" Id="62eda437-c6ff-4609-95fc-f940ad35ede8" />
+  <Project Path="Restaurants.Infrastructure.Tests/Restaurants.Infrastructure.Tests.csproj" />
+  <Project Path="Restaurants.Infrastructure/Restaurants.Infrastructure.csproj" />
 </Solution>

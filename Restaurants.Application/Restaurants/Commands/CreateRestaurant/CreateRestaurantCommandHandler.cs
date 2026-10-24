@@ -2,12 +2,9 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Restaurants.Application.Constants;
-using Restaurants.Application.Interfaces;
 using Restaurants.Application.Repositories;
 using Restaurants.Application.Users;
 using Restaurants.Domain.Entities;
-using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 
@@ -16,8 +13,7 @@ public class CreateRestaurantCommandHandler(
     IMapper mapper,
     IRestaurantsRepository restaurantsRepository,
     IValidator<CreateRestaurantCommand> validator,
-    IUserContext userContext,
-    IRestaurantAuthorizationService restaurantAuthorizationService
+    IUserContext userContext
     ) : IRequestHandler<CreateRestaurantCommand, int>
 {
     public async Task<int> Handle(
@@ -36,11 +32,6 @@ public class CreateRestaurantCommandHandler(
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
         var restaurant = mapper.Map<Restaurant>(request);
-
-        if (!restaurantAuthorizationService.Authorize(restaurant, ResourceOperation.Create))
-        {
-            throw new ForbidException();
-        }
 
         restaurant.OwnerId = currentUser.Id;
 
