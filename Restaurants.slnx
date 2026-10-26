@@ -2,10 +2,15 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
-  <Project Path="Restaurants.API/Restaurants.API.csproj" />
-  <Project Path="Restaurants.Application.Tests/Restaurants.Application.Tests.csproj" Id="4c1b5540-e567-4a0d-9ba7-da0932914d6e" />
-  <Project Path="Restaurants.Application/Restaurants.Application.csproj" Id="91b13373-8f0e-44f4-91a4-77ce13ea131b" />
-  <Project Path="Restaurants.Domain/Restaurants.Domain.csproj" Id="913dccda-0e9a-4e82-b99b-1d817b98f93e" />
-  <Project Path="Restaurants.Infrastructure.Tests/Restaurants.Infrastructure.Tests.csproj" />
-  <Project Path="Restaurants.Infrastructure/Restaurants.Infrastructure.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/Restaurants.API/Restaurants.API.csproj" />
+    <Project Path="src/Restaurants.Application/Restaurants.Application.csproj" />
+    <Project Path="src/Restaurants.Domain/Restaurants.Domain.csproj" />
+    <Project Path="src/Restaurants.Infrastructure/Restaurants.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Restaurants.API.Tests/Restaurants.API.Tests.csproj" />
+    <Project Path="tests/Restaurants.Application.Tests/Restaurants.Application.Tests.csproj" />
+    <Project Path="tests/Restaurants.Infrastructure.Tests/Restaurants.Infrastructure.Tests.csproj" />
+  </Folder>
 </Solution>
