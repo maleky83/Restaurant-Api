@@ -1,11 +1,12 @@
-﻿namespace Restaurants.Application.Users;
-
-public record CurrentUser(
-    string Id,
-    string Email,
-    IEnumerable<string> Roles,
-    string? Nationality,
-    DateOnly? DateOfBirth)
+﻿namespace Restaurants.Application.Users
 {
-    public bool IsInRole(string role) => Roles.Contains(role);
+    public record CurrentUser(
+        string Id,
+        string Email,
+        IEnumerable<string> Roles,
+        string? Nationality,
+        DateOnly? DateOfBirth)
+    {
+        public bool IsInRole(string role) => Roles.Contains(role);
+    }
 }

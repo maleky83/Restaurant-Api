@@ -1,9 +1,10 @@
-﻿using Restaurants.Application.Constants;
+﻿using Restaurants.Application.Common.Constants;
 using Restaurants.Domain.Entities;
 
-namespace Restaurants.Application.Interfaces;
-
-public interface IRestaurantAuthorizationService
+namespace Restaurants.Application.Interfaces
 {
-    bool Authorize(Restaurant restaurant, ResourceOperation resourceOperation);
+    public interface IRestaurantAuthorizationService
+    {
+        bool Authorize(Restaurant restaurant, ResourceOperation resourceOperation);
+    }
 }

@@ -1,9 +1,10 @@
 ﻿using Restaurants.Domain.Entities;
 
-namespace Restaurants.Application.Repositories;
-
-public interface IDishesRepository
+namespace Restaurants.Application.Repositories
 {
-    Task<int> CreateAsync(Dish entity);
-    Task DeleteAllAsync(IEnumerable<Dish> entity);
+    public interface IDishesRepository
+    {
+        Task<int> CreateAsync(Dish entity);
+        Task DeleteAllAsync(IEnumerable<Dish> entity);
+    }
 }

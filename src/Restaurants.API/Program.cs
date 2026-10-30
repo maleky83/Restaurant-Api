@@ -1,8 +1,8 @@
-using Restaurants.API.Extensions;
+using Restaurants.API;
 using Restaurants.API.Middlewares;
-using Restaurants.Application.Extensions;
+using Restaurants.Application;
 using Restaurants.Domain.Entities;
-using Restaurants.Infrastructure.Extensions;
+using Restaurants.Infrastructure;
 using Restaurants.Infrastructure.Seeders;
 using Serilog;
 

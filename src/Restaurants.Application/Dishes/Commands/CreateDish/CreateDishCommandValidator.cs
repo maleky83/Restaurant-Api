@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 
-namespace Restaurants.Application.Dishes.Commands.CreateDish;
-
-public class CreateDishCommandValidator : AbstractValidator<CreateDishCommand>
+namespace Restaurants.Application.Dishes.Commands.CreateDish
 {
-    public CreateDishCommandValidator()
+    public class CreateDishCommandValidator : AbstractValidator<CreateDishCommand>
     {
-        RuleFor(x => x.Price)
-            .GreaterThanOrEqualTo(0);
+        public CreateDishCommandValidator()
+        {
+            RuleFor(x => x.Price)
+                .GreaterThanOrEqualTo(0);
 
-        RuleFor(x => x.KiloCalories)
-            .GreaterThanOrEqualTo(0);
+            RuleFor(x => x.KiloCalories)
+                .GreaterThanOrEqualTo(0);
+        }
     }
 }

@@ -2,14 +2,15 @@
 using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Domain.Entities;
 
-namespace Restaurants.Application.Dishes.Dtos;
-
-public class DishesProfile : Profile
+namespace Restaurants.Application.Dishes.Dtos
 {
-    public DishesProfile()
+    public class DishesProfile : Profile
     {
-        CreateMap<Dish, DishDto>();
+        public DishesProfile()
+        {
+            CreateMap<Dish, DishDto>();
 
-        CreateMap<CreateDishCommand, Dish>();
+            CreateMap<CreateDishCommand, Dish>();
+        }
     }
 }

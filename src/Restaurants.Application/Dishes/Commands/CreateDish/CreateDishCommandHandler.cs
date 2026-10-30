@@ -2,41 +2,42 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Restaurants.Application.Constants;
+using Restaurants.Application.Common.Constants;
 using Restaurants.Application.Interfaces;
 using Restaurants.Application.Repositories;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
 
-namespace Restaurants.Application.Dishes.Commands.CreateDish;
-
-public class CreateDishCommandHandler(
-    ILogger<CreateDishCommandHandler> logger,
-    IMapper mapper,
-    IDishesRepository dishRepository,
-    IRestaurantsRepository restaurantsRepository,
-    IValidator<CreateDishCommand> validator,
-    IRestaurantAuthorizationService restaurantAuthorizationService
-    ) : IRequestHandler<CreateDishCommand, int>
+namespace Restaurants.Application.Dishes.Commands.CreateDish
 {
-    public async Task<int> Handle(CreateDishCommand request, CancellationToken cancellationToken)
+    public class CreateDishCommandHandler(
+        ILogger<CreateDishCommandHandler> logger,
+        IMapper mapper,
+        IDishesRepository dishRepository,
+        IRestaurantsRepository restaurantsRepository,
+        IValidator<CreateDishCommand> validator,
+        IRestaurantAuthorizationService restaurantAuthorizationService
+        ) : IRequestHandler<CreateDishCommand, int>
     {
-        logger.LogInformation("Creating dish {@DishRequest}", request);
-
-        await validator.ValidateAndThrowAsync(request, cancellationToken);
-
-        var restaurant = await restaurantsRepository
-            .GetByIdAsync(request.RestaurantId)
-            ?? throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
-
-        if (!restaurantAuthorizationService.Authorize(restaurant, ResourceOperation.Create))
+        public async Task<int> Handle(CreateDishCommand request, CancellationToken cancellationToken)
         {
-            throw new ForbidException();
+            logger.LogInformation("Creating dish {@DishRequest}", request);
+
+            await validator.ValidateAndThrowAsync(request, cancellationToken);
+
+            var restaurant = await restaurantsRepository
+                .GetByIdAsync(request.RestaurantId)
+                ?? throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
+
+            if (!restaurantAuthorizationService.Authorize(restaurant, ResourceOperation.Create))
+            {
+                throw new ForbidException();
+            }
+
+            var dish = mapper.Map<Dish>(request);
+
+            var dishId = await dishRepository.CreateAsync(dish);
+            return dishId;
         }
-
-        var dish = mapper.Map<Dish>(request);
-
-        var dishId = await dishRepository.CreateAsync(dish);
-        return dishId;
     }
 }

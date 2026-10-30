@@ -21,8 +21,4 @@
     <PackageReference Include="xunit.v3" Version="4.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Restaurants.API\Restaurants.API.csproj" />
-  </ItemGroup>
-
 </Project>

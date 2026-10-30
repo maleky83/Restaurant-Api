@@ -1,24 +1,25 @@
 ﻿using System.Diagnostics;
 
-namespace Restaurants.API.Middlewares;
-
-public class RequestTimeLoggingMiddleware(
-    ILogger<RequestTimeLoggingMiddleware> logger
-    ) : IMiddleware
+namespace Restaurants.API.Middlewares
 {
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public class RequestTimeLoggingMiddleware(
+        ILogger<RequestTimeLoggingMiddleware> logger
+        ) : IMiddleware
     {
-        var stopwatch = Stopwatch.StartNew();
-        await next.Invoke(context);
-        stopwatch.Stop();
-
-        if (stopwatch.ElapsedMilliseconds / 1000 > 4)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            logger.LogInformation("Request [{verb}] at {path} took {time} ms",
-                context.Request.Method,
-                context.Request.Path,
-                stopwatch.ElapsedMilliseconds
-                );
+            var stopwatch = Stopwatch.StartNew();
+            await next.Invoke(context);
+            stopwatch.Stop();
+
+            if (stopwatch.ElapsedMilliseconds / 1000 > 4)
+            {
+                logger.LogInformation("Request [{verb}] at {path} took {time} ms",
+                    context.Request.Method,
+                    context.Request.Path,
+                    stopwatch.ElapsedMilliseconds
+                    );
+            }
         }
     }
 }

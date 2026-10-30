@@ -1,55 +1,56 @@
 ﻿using Microsoft.Extensions.Logging;
-using Restaurants.Application.Constants;
+using Restaurants.Application.Common.Constants;
 using Restaurants.Application.Interfaces;
 using Restaurants.Application.Users;
 using Restaurants.Domain.Entities;
 
-namespace Restaurants.Infrastructure.Authorization.Services;
-
-public class RestaurantAuthorizationService(
-    ILogger<RestaurantAuthorizationService> logger,
-    IUserContext userContext
-    ) : IRestaurantAuthorizationService
+namespace Restaurants.Infrastructure.Authorization.Services
 {
-    public bool Authorize(Restaurant restaurant, ResourceOperation resourceOperation)
+    public class RestaurantAuthorizationService(
+        ILogger<RestaurantAuthorizationService> logger,
+        IUserContext userContext
+        ) : IRestaurantAuthorizationService
     {
-        var user = userContext.GetCurrentUser();
-
-        logger.LogInformation(
-            "Authorization user {UserEmail} , to {Operation} for restaurant {RestaurantName}",
-            user.Email,
-            resourceOperation,
-            restaurant.Name);
-
-        if (
-            resourceOperation == ResourceOperation.Create ||
-            resourceOperation == ResourceOperation.Read)
+        public bool Authorize(Restaurant restaurant, ResourceOperation resourceOperation)
         {
-            logger.LogInformation("Create/read operation - successful authorization");
-            return true;
-        }
+            var user = userContext.GetCurrentUser();
 
-        if (
-            resourceOperation == ResourceOperation.Delete &&
-            user.IsInRole(UserRoles.Admin)
-           )
-        {
             logger.LogInformation(
-                "Admin user , delete operation - successful authorization");
+                "Authorization user {UserEmail} , to {Operation} for restaurant {RestaurantName}",
+                user.Email,
+                resourceOperation,
+                restaurant.Name);
 
-            return true;
+            if (
+                resourceOperation == ResourceOperation.Create ||
+                resourceOperation == ResourceOperation.Read)
+            {
+                logger.LogInformation("Create/read operation - successful authorization");
+                return true;
+            }
+
+            if (
+                resourceOperation == ResourceOperation.Delete &&
+                user.IsInRole(UserRoles.Admin)
+               )
+            {
+                logger.LogInformation(
+                    "Admin user , delete operation - successful authorization");
+
+                return true;
+            }
+
+            if ((resourceOperation == ResourceOperation.Delete ||
+                resourceOperation == ResourceOperation.Update) &&
+                user.Id == restaurant.OwnerId
+              )
+            {
+                logger.LogInformation("Restaurant owner - successful authorization");
+
+                return true;
+            }
+
+            return false;
         }
-
-        if ((resourceOperation == ResourceOperation.Delete ||
-            resourceOperation == ResourceOperation.Update) &&
-            user.Id == restaurant.OwnerId
-          )
-        {
-            logger.LogInformation("Restaurant owner - successful authorization");
-
-            return true;
-        }
-
-        return false;
     }
 }

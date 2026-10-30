@@ -6,28 +6,29 @@ using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
 
-namespace Restaurants.Application.Restaurants.Queries.GetRestaurantById;
-
-public class GetRestaurantByIdQueryHandler(
-    ILogger<GetRestaurantByIdQueryHandler> logger,
-    IRestaurantsRepository restaurantsRepository,
-    IMapper mapper
-    ) :
-    IRequestHandler<GetRestaurantByIdQuery, RestaurantDto?>
+namespace Restaurants.Application.Restaurants.Queries.GetRestaurantById
 {
-    public async Task<RestaurantDto?> Handle(
-        GetRestaurantByIdQuery request,
-        CancellationToken cancellationToken)
+    public class GetRestaurantByIdQueryHandler(
+        ILogger<GetRestaurantByIdQueryHandler> logger,
+        IRestaurantsRepository restaurantsRepository,
+        IMapper mapper
+        ) :
+        IRequestHandler<GetRestaurantByIdQuery, RestaurantDto?>
     {
-        logger.LogInformation("Getting restaurant {RestaurantId}", request.Id);
+        public async Task<RestaurantDto?> Handle(
+            GetRestaurantByIdQuery request,
+            CancellationToken cancellationToken)
+        {
+            logger.LogInformation("Getting restaurant {RestaurantId}", request.Id);
 
-        var restaurant = await restaurantsRepository.GetByIdAsync(request.Id)
-            ?? throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
+            var restaurant = await restaurantsRepository.GetByIdAsync(request.Id)
+                ?? throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
 
 
 
-        var restaurantDto = mapper.Map<RestaurantDto?>(restaurant);
+            var restaurantDto = mapper.Map<RestaurantDto?>(restaurant);
 
-        return restaurantDto;
+            return restaurantDto;
+        }
     }
 }

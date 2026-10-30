@@ -2,36 +2,37 @@
 using Restaurants.Application.Repositories;
 using Restaurants.Application.Users;
 
-namespace Restaurants.Infrastructure.Authorization.Requirements.CreatedMultipleRestaurants;
-
-internal class CreatedMultipleRestaurantsRequirementHandler(
-    IUserContext userContext,
-    IRestaurantsRepository restaurantsRepository
-    ) : AuthorizationHandler<CreatedMultipleRestaurantsRequirement>
+namespace Restaurants.Infrastructure.Authorization.Requirements.CreatedMultipleRestaurants
 {
-    protected override async Task HandleRequirementAsync(
-        AuthorizationHandlerContext context,
-        CreatedMultipleRestaurantsRequirement requirement)
+    internal class CreatedMultipleRestaurantsRequirementHandler(
+        IUserContext userContext,
+        IRestaurantsRepository restaurantsRepository
+        ) : AuthorizationHandler<CreatedMultipleRestaurantsRequirement>
     {
-        var user = userContext.GetCurrentUser();
-
-        if (user == null)
+        protected override async Task HandleRequirementAsync(
+            AuthorizationHandlerContext context,
+            CreatedMultipleRestaurantsRequirement requirement)
         {
-            context.Fail();
-            return;
-        }
+            var user = userContext.GetCurrentUser();
 
-        var restaurants = await restaurantsRepository.GetAllAsync();
+            if (user == null)
+            {
+                context.Fail();
+                return;
+            }
 
-        var userRestaurantsCreated = restaurants.Count(r => r.OwnerId == user.Id);
+            var restaurants = await restaurantsRepository.GetAllAsync();
 
-        if (userRestaurantsCreated >= requirement.MinimumRestaurantsCreated)
-        {
-            context.Succeed(requirement);
-        }
-        else
-        {
-            context.Fail();
+            var userRestaurantsCreated = restaurants.Count(r => r.OwnerId == user.Id);
+
+            if (userRestaurantsCreated >= requirement.MinimumRestaurantsCreated)
+            {
+                context.Succeed(requirement);
+            }
+            else
+            {
+                context.Fail();
+            }
         }
     }
 }

@@ -4,25 +4,26 @@ using Microsoft.Extensions.Logging;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
 
-namespace Restaurants.Application.Users.Commands.UpdateUserDetails;
-
-public class UpdateUserDetailsCommandHandler(
-    ILogger<UpdateUserDetailsCommandHandler> logger,
-    IUserContext userContext,
-    IUserStore<User> userStore
-    ) : IRequestHandler<UpdateUserDetailsCommand>
+namespace Restaurants.Application.Users.Commands.UpdateUserDetails
 {
-    public async Task Handle(UpdateUserDetailsCommand request, CancellationToken cancellationToken)
+    public class UpdateUserDetailsCommandHandler(
+        ILogger<UpdateUserDetailsCommandHandler> logger,
+        IUserContext userContext,
+        IUserStore<User> userStore
+        ) : IRequestHandler<UpdateUserDetailsCommand>
     {
-        var user = userContext.GetCurrentUser();
-        logger.LogInformation("Updating user {UserId} with {@Request}", user!.Id, request);
+        public async Task Handle(UpdateUserDetailsCommand request, CancellationToken cancellationToken)
+        {
+            var user = userContext.GetCurrentUser();
+            logger.LogInformation("Updating user {UserId} with {@Request}", user!.Id, request);
 
-        var dbUser = await userStore.FindByIdAsync(user.Id, cancellationToken)
-            ?? throw new NotFoundException(nameof(User), user!.Id);
+            var dbUser = await userStore.FindByIdAsync(user.Id, cancellationToken)
+                ?? throw new NotFoundException(nameof(User), user!.Id);
 
-        dbUser.Nationality = request.Nationality;
-        dbUser.DateOfBirth = request.DateOfBirth;
+            dbUser.Nationality = request.Nationality;
+            dbUser.DateOfBirth = request.DateOfBirth;
 
-        await userStore.UpdateAsync(dbUser, cancellationToken);
+            await userStore.UpdateAsync(dbUser, cancellationToken);
+        }
     }
 }

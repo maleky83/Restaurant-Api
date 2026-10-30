@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Constants;
+using Restaurants.Application.Common.Constants;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Commands.DeleteRestraurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
@@ -10,66 +10,67 @@ using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 using Restaurants.Infrastructure.Constants;
 
-namespace Restaurants.API.Controllers;
-
-[ApiController]
-[Route("api/restaurants")]
-[Authorize]
-public class RestaurantsController(IMediator mediator) : ControllerBase
+namespace Restaurants.API.Controllers
 {
-
-    [HttpGet]
-    [AllowAnonymous]
-    //[Authorize(Roles = UserRoles.Owner, Policy = PolicyNames.CreatedAtleast2Restaurants)]
-    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll(
-        [FromQuery] GetAllRestaurantsQuery query)
+    [ApiController]
+    [Route("api/restaurants")]
+    [Authorize]
+    public class RestaurantsController(IMediator mediator) : ControllerBase
     {
-        var restaurants = await mediator.Send(query);
 
-        return Ok(restaurants);
-    }
+        [HttpGet]
+        [AllowAnonymous]
+        //[Authorize(Roles = UserRoles.Owner, Policy = PolicyNames.CreatedAtleast2Restaurants)]
+        public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll(
+            [FromQuery] GetAllRestaurantsQuery query)
+        {
+            var restaurants = await mediator.Send(query);
 
-    [HttpGet("{id}")]
-    [Authorize(Policy = PolicyNames.HasNationality)]
-    public async Task<ActionResult<RestaurantDto>> GetById([FromRoute] int id)
-    {
-        var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
+            return Ok(restaurants);
+        }
 
-        return Ok(restaurant);
-    }
+        [HttpGet("{id}")]
+        [Authorize(Policy = PolicyNames.HasNationality)]
+        public async Task<ActionResult<RestaurantDto>> GetById([FromRoute] int id)
+        {
+            var restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
 
-    [HttpPost]
-    [Authorize(Roles = UserRoles.Owner)]
-    public async Task<ActionResult> CreateRestaurant(
-     CreateRestaurantCommand command)
-    {
-        int id = await mediator.Send(command);
+            return Ok(restaurant);
+        }
 
-        return CreatedAtAction(nameof(GetById), new { id }, null);
-    }
+        [HttpPost]
+        [Authorize(Roles = UserRoles.Owner)]
+        public async Task<ActionResult> CreateRestaurant(
+         CreateRestaurantCommand command)
+        {
+            int id = await mediator.Send(command);
 
-    [HttpDelete("{id}")]
-    [Authorize(Roles = UserRoles.Owner)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
-    {
-        await mediator.Send(new DeleteRestaurantCommand(id));
+            return CreatedAtAction(nameof(GetById), new { id }, null);
+        }
 
-        return NoContent();
-    }
+        [HttpDelete("{id}")]
+        [Authorize(Roles = UserRoles.Owner)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteRestaurant([FromRoute] int id)
+        {
+            await mediator.Send(new DeleteRestaurantCommand(id));
 
-    [HttpPatch("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateRestaurant(
-        [FromRoute] int id,
-        [FromBody] UpdateRestaurantCommand command)
-    {
-        command.Id = id;
+            return NoContent();
+        }
 
-        await mediator.Send(command);
+        [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateRestaurant(
+            [FromRoute] int id,
+            [FromBody] UpdateRestaurantCommand command)
+        {
+            command.Id = id;
 
-        return NoContent();
+            await mediator.Send(command);
+
+            return NoContent();
+        }
     }
 }

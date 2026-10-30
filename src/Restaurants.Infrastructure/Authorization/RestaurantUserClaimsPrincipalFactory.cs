@@ -4,28 +4,29 @@ using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Constants;
 using System.Security.Claims;
 
-namespace Restaurants.Infrastructure.Authorization;
-
-public class RestaurantUserClaimsPrincipalFactory(
-    UserManager<User> userManager,
-    RoleManager<IdentityRole> roleManager,
-    IOptions<IdentityOptions> options) :
-        UserClaimsPrincipalFactory<User, IdentityRole>(userManager, roleManager, options)
+namespace Restaurants.Infrastructure.Authorization
 {
-    public override async Task<ClaimsPrincipal> CreateAsync(User user)
+    public class RestaurantUserClaimsPrincipalFactory(
+        UserManager<User> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IOptions<IdentityOptions> options) :
+            UserClaimsPrincipalFactory<User, IdentityRole>(userManager, roleManager, options)
     {
-        var id = await GenerateClaimsAsync(user);
-
-        if (user.Nationality != null)
+        public override async Task<ClaimsPrincipal> CreateAsync(User user)
         {
-            id.AddClaim(new Claim(AppClaimTypes.Nationality, user.Nationality));
-        }
+            var id = await GenerateClaimsAsync(user);
 
-        if (user.DateOfBirth != null)
-        {
-            id.AddClaim(new Claim(AppClaimTypes.DateOfBirth, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
-        }
+            if (user.Nationality != null)
+            {
+                id.AddClaim(new Claim(AppClaimTypes.Nationality, user.Nationality));
+            }
 
-        return new ClaimsPrincipal(id);
+            if (user.DateOfBirth != null)
+            {
+                id.AddClaim(new Claim(AppClaimTypes.DateOfBirth, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
+            }
+
+            return new ClaimsPrincipal(id);
+        }
     }
 }

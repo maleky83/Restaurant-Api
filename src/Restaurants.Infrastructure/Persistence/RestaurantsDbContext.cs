@@ -2,29 +2,30 @@
 using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Entities;
 
-namespace Restaurants.Infrastructure.Persistence;
-
-internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) :
-    IdentityDbContext<User>(options)
+namespace Restaurants.Infrastructure.Persistence
 {
-    internal DbSet<Restaurant> Restaurants { get; set; }
-    internal DbSet<Dish> Dishes { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) :
+        IdentityDbContext<User>(options)
     {
-        base.OnModelCreating(modelBuilder);
+        internal DbSet<Restaurant> Restaurants { get; set; }
+        internal DbSet<Dish> Dishes { get; set; }
 
-        modelBuilder.Entity<Restaurant>()
-            .OwnsOne(r => r.Address);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Restaurant>()
-            .HasMany(r => r.Dishes)
-            .WithOne()
-            .HasForeignKey(d => d.RestaurantId);
+            modelBuilder.Entity<Restaurant>()
+                .OwnsOne(r => r.Address);
 
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.OwnedRestaurants)
-            .WithOne(r => r.Owner)
-            .HasForeignKey(u => u.OwnerId);
+            modelBuilder.Entity<Restaurant>()
+                .HasMany(r => r.Dishes)
+                .WithOne()
+                .HasForeignKey(d => d.RestaurantId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.OwnedRestaurants)
+                .WithOne(r => r.Owner)
+                .HasForeignKey(u => u.OwnerId);
+        }
     }
 }

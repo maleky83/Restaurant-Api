@@ -6,29 +6,30 @@ using Restaurants.Application.Repositories;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Exceptions;
 
-namespace Restaurants.Application.Dishes.Queries.GetDishByIdForRestaurant;
-
-public class GetDishByIdForRestaurantQueryHandler(
-    ILogger<GetDishByIdForRestaurantQueryHandler> logger,
-    IMapper mapper,
-    IRestaurantsRepository restaurantsRepository
-    ) :
-    IRequestHandler<GetDishByIdForRestaurantQuery, DishDto>
+namespace Restaurants.Application.Dishes.Queries.GetDishByIdForRestaurant
 {
-    public async Task<DishDto> Handle(GetDishByIdForRestaurantQuery request, CancellationToken cancellationToken)
+    public class GetDishByIdForRestaurantQueryHandler(
+        ILogger<GetDishByIdForRestaurantQueryHandler> logger,
+        IMapper mapper,
+        IRestaurantsRepository restaurantsRepository
+        ) :
+        IRequestHandler<GetDishByIdForRestaurantQuery, DishDto>
     {
-        logger.LogInformation("Retrieving dish:{DishId} for restaurant {RestaurantId}",
-            request.DishId,
-            request.RestaurantId);
+        public async Task<DishDto> Handle(GetDishByIdForRestaurantQuery request, CancellationToken cancellationToken)
+        {
+            logger.LogInformation("Retrieving dish:{DishId} for restaurant {RestaurantId}",
+                request.DishId,
+                request.RestaurantId);
 
-        var restaurant = await restaurantsRepository.GetByIdAsync(request.RestaurantId)
-            ?? throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
+            var restaurant = await restaurantsRepository.GetByIdAsync(request.RestaurantId)
+                ?? throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
 
-        Dish dish = restaurant.Dishes.FirstOrDefault(d => d.Id == request.DishId)
-            ?? throw new NotFoundException(nameof(Dish), request.DishId.ToString());
+            Dish dish = restaurant.Dishes.FirstOrDefault(d => d.Id == request.DishId)
+                ?? throw new NotFoundException(nameof(Dish), request.DishId.ToString());
 
-        var result = mapper.Map<DishDto>(dish);
+            var result = mapper.Map<DishDto>(dish);
 
-        return result;
+            return result;
+        }
     }
 }

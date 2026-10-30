@@ -1,38 +1,39 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Constants;
+using Restaurants.Application.Common.Constants;
 using Restaurants.Application.Users.Commands.AssignUserRole;
 using Restaurants.Application.Users.Commands.UnassignUserRole;
 using Restaurants.Application.Users.Commands.UpdateUserDetails;
 
-namespace Restaurants.API.Controllers;
-
-[Route("api/identity")]
-[ApiController]
-[Authorize]
-public class IdentityController(IMediator mediator) : ControllerBase
+namespace Restaurants.API.Controllers
 {
-    [HttpPatch("user")]
-    public async Task<IActionResult> UpdateUserDetails(UpdateUserDetailsCommand command)
+    [Route("api/identity")]
+    [ApiController]
+    [Authorize]
+    public class IdentityController(IMediator mediator) : ControllerBase
     {
-        await mediator.Send(command);
-        return NoContent();
-    }
+        [HttpPatch("user")]
+        public async Task<IActionResult> UpdateUserDetails(UpdateUserDetailsCommand command)
+        {
+            await mediator.Send(command);
+            return NoContent();
+        }
 
-    [HttpPost("userRole")]
-    [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> AssignUserRole(AssignUserRoleCommand command)
-    {
-        await mediator.Send(command);
-        return NoContent();
-    }
+        [HttpPost("userRole")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> AssignUserRole(AssignUserRoleCommand command)
+        {
+            await mediator.Send(command);
+            return NoContent();
+        }
 
-    [HttpDelete("userRole")]
-    [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> UnassignUserRole(UnassignUserRoleCommand command)
-    {
-        await mediator.Send(command);
-        return NoContent();
+        [HttpDelete("userRole")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> UnassignUserRole(UnassignUserRoleCommand command)
+        {
+            await mediator.Send(command);
+            return NoContent();
+        }
     }
 }

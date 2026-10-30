@@ -2,43 +2,44 @@
 using Microsoft.Extensions.Logging;
 using Restaurants.Application.Users;
 
-namespace Restaurants.Infrastructure.Authorization.Requirements.MinimumAge;
-
-public class MinimumAgeRequirementHandler(
-    ILogger<MinimumAgeRequirementHandler> logger,
-    IUserContext userContext
-    ) : AuthorizationHandler<MinimumAgeRequirement>
+namespace Restaurants.Infrastructure.Authorization.Requirements.MinimumAge
 {
-    protected override Task HandleRequirementAsync(
-        AuthorizationHandlerContext context,
-        MinimumAgeRequirement requirement)
+    public class MinimumAgeRequirementHandler(
+        ILogger<MinimumAgeRequirementHandler> logger,
+        IUserContext userContext
+        ) : AuthorizationHandler<MinimumAgeRequirement>
     {
-        var currentUser = userContext.GetCurrentUser();
-
-        logger.LogInformation("User : {Email} , DateOfBirth : {DoB} - Handling MinimumAgeRequirement",
-            currentUser?.Email,
-            currentUser?.DateOfBirth
-            );
-
-        if (currentUser.DateOfBirth == null)
+        protected override Task HandleRequirementAsync(
+            AuthorizationHandlerContext context,
+            MinimumAgeRequirement requirement)
         {
-            logger.LogWarning("User date of birth is null");
-            context.Fail();
+            var currentUser = userContext.GetCurrentUser();
+
+            logger.LogInformation("User : {Email} , DateOfBirth : {DoB} - Handling MinimumAgeRequirement",
+                currentUser?.Email,
+                currentUser?.DateOfBirth
+                );
+
+            if (currentUser.DateOfBirth == null)
+            {
+                logger.LogWarning("User date of birth is null");
+                context.Fail();
+                return Task.CompletedTask;
+            }
+
+            if (currentUser.DateOfBirth.Value.AddYears(requirement.MinimumAge) <=
+                DateOnly.FromDateTime(DateTime.Today))
+            {
+                logger.LogInformation("Authorization succeeded");
+                context.Succeed(requirement);
+            }
+
+            else
+            {
+                context.Fail();
+            }
+
             return Task.CompletedTask;
         }
-
-        if (currentUser.DateOfBirth.Value.AddYears(requirement.MinimumAge) <=
-            DateOnly.FromDateTime(DateTime.Today))
-        {
-            logger.LogInformation("Authorization succeeded");
-            context.Succeed(requirement);
-        }
-
-        else
-        {
-            context.Fail();
-        }
-
-        return Task.CompletedTask;
     }
 }

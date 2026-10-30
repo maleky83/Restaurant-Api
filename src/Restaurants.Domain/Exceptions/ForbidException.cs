@@ -1,5 +1,6 @@
-﻿namespace Restaurants.Domain.Exceptions;
-
-public class ForbidException : Exception
+﻿namespace Restaurants.Domain.Exceptions
 {
+    public class ForbidException : Exception
+    {
+    }
 }

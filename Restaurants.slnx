@@ -1,16 +1,8 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path=".editorconfig" />
-  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Restaurants.API/Restaurants.API.csproj" />
     <Project Path="src/Restaurants.Application/Restaurants.Application.csproj" />
     <Project Path="src/Restaurants.Domain/Restaurants.Domain.csproj" />
     <Project Path="src/Restaurants.Infrastructure/Restaurants.Infrastructure.csproj" />
-  </Folder>
-  <Folder Name="/tests/">
-    <Project Path="tests/Restaurants.API.Tests/Restaurants.API.Tests.csproj" />
-    <Project Path="tests/Restaurants.Application.Tests/Restaurants.Application.Tests.csproj" />
-    <Project Path="tests/Restaurants.Infrastructure.Tests/Restaurants.Infrastructure.Tests.csproj" />
   </Folder>
 </Solution>

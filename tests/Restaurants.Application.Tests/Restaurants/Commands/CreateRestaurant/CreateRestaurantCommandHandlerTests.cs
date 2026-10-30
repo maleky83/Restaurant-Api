@@ -28,7 +28,7 @@ public class CreateRestaurantCommandHandlerTests
         restaurantRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<Restaurant>()))
             .ReturnsAsync(1);
 
-        var validator = new Mock<CreateRestaurantCommandValidator>();
+        var validatorMock = new Mock<CreateRestaurantCommandValidator>();
 
         var userContext = new Mock<IUserContext>();
 
@@ -38,7 +38,7 @@ public class CreateRestaurantCommandHandlerTests
         var commandHandler = new CreateRestaurantCommandHandler(loggerMock.Object,
             mapperMock.Object,
             restaurantRepositoryMock.Object,
-            validator.Object,
+            validatorMock.Object,
             userContext.Object);
 
         // act 

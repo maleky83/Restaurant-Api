@@ -1,24 +1,25 @@
 ﻿using FluentValidation;
 
-namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant;
-
-public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
+namespace Restaurants.Application.Restaurants.Commands.CreateRestaurant
 {
-    private readonly List<string> validCategories = ["Italian", "Mexican", "Japanese", "American", "Indian"];
-
-    public CreateRestaurantCommandValidator()
+    public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
     {
-        RuleFor(dto => dto.Name)
-            .Length(3, 100);
+        private readonly List<string> validCategories = ["Italian", "Mexican", "Japanese", "American", "Indian"];
 
-        RuleFor(dto => dto.Category)
-            .Must(category => validCategories.Contains(category, StringComparer.OrdinalIgnoreCase))
-            .WithMessage("must contain Italian or Mexican or Japanese or American or Indian");
+        public CreateRestaurantCommandValidator()
+        {
+            RuleFor(dto => dto.Name)
+                .Length(3, 100);
 
-        RuleFor(dto => dto.ContactEmail)
-            .EmailAddress();
+            RuleFor(dto => dto.Category)
+                .Must(category => validCategories.Contains(category, StringComparer.OrdinalIgnoreCase))
+                .WithMessage("must contain Italian or Mexican or Japanese or American or Indian");
 
-        RuleFor(dto => dto.PostalCode)
-            .Matches(@"^\d{2}-\d{3}$");
+            RuleFor(dto => dto.ContactEmail)
+                .EmailAddress();
+
+            RuleFor(dto => dto.PostalCode)
+                .Matches(@"^\d{2}-\d{3}$");
+        }
     }
 }

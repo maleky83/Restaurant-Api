@@ -1,7 +1,8 @@
-﻿namespace Restaurants.Infrastructure.Constants;
-
-public static class AppClaimTypes
+﻿namespace Restaurants.Infrastructure.Constants
 {
-    public const string Nationality = "Nationality";
-    public const string DateOfBirth = "DateOfBirth";
+    public static class AppClaimTypes
+    {
+        public const string Nationality = "Nationality";
+        public const string DateOfBirth = "DateOfBirth";
+    }
 }

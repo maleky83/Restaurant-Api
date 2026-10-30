@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Restaurants.Infrastructure.Authorization.Requirements.CreatedMultipleRestaurants;
-
-public class CreatedMultipleRestaurantsRequirement(int minimumRestaurantsCreated) :
-    IAuthorizationRequirement
+namespace Restaurants.Infrastructure.Authorization.Requirements.CreatedMultipleRestaurants
 {
-    public int MinimumRestaurantsCreated { get; } = minimumRestaurantsCreated;
+    public class CreatedMultipleRestaurantsRequirement(int minimumRestaurantsCreated) :
+        IAuthorizationRequirement
+    {
+        public int MinimumRestaurantsCreated { get; } = minimumRestaurantsCreated;
+    }
 }

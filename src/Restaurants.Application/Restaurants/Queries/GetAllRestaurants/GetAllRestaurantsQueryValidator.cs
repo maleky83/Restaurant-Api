@@ -1,30 +1,37 @@
 ﻿using FluentValidation;
 using Restaurants.Application.Restaurants.Dtos;
 
-namespace Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
-
-public class GetAllRestaurantsQueryValidator : AbstractValidator<GetAllRestaurantsQuery>
+namespace Restaurants.Application.Restaurants.Queries.GetAllRestaurants
 {
-    private readonly int[] AllowPageSizes = [5, 10, 15, 30];
-
-    private readonly string[] AllowSortByColumnNames =
-        [nameof(RestaurantDto.Name).ToLower(),
-        nameof(RestaurantDto.Description).ToLower(),
-        nameof(RestaurantDto.Category).ToLower()];
-
-    public GetAllRestaurantsQueryValidator()
+    public class GetAllRestaurantsQueryValidator : AbstractValidator<GetAllRestaurantsQuery>
     {
-        RuleFor(r => r.PageNumber)
-            .GreaterThanOrEqualTo(1);
+        private readonly int[] AllowPageSizes = [5, 10, 15, 30];
 
-        RuleFor(r => r.PageSize)
-            .Must(value => AllowPageSizes.Contains(value))
-            .WithMessage($"Page size must be in [{string.Join(",", AllowPageSizes)}]");
+        private readonly string[] AllowSortByColumnNames =
+            [nameof(RestaurantDto.Name).ToLower(),
+            nameof(RestaurantDto.Description).ToLower(),
+            nameof(RestaurantDto.Category).ToLower()];
 
-        RuleFor(r => r.SortBy)
-            .Must(value => AllowSortByColumnNames.Contains(value?.ToLower()))
-            .When(r => r.SortBy != null)
-            .WithMessage(
-                $"Sort by is optional, or must be in [{string.Join(",", AllowSortByColumnNames)}]");
+        public GetAllRestaurantsQueryValidator()
+        {
+            RuleFor(r => r.PageNumber)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(x => x)
+            .Must(x => x.PageSize.HasValue == x.PageNumber.HasValue)
+            .WithMessage("PageSize and PageNumber must be provided together.");
+
+
+            RuleFor(r => r.PageSize)
+                .Must(value => AllowPageSizes.Contains(value.GetValueOrDefault()))
+                .When(value => value.PageSize.HasValue)
+                .WithMessage($"Page size must be in [{string.Join(",", AllowPageSizes)}]");
+
+            RuleFor(r => r.SortBy)
+                .Must(value => AllowSortByColumnNames.Contains(value?.ToLower()))
+                .When(r => r.SortBy != null)
+                .WithMessage(
+                    $"Sort by is optional, or must be in [{string.Join(",", AllowSortByColumnNames)}]");
+        }
     }
 }
